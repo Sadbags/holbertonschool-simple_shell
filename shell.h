@@ -10,7 +10,7 @@
 #include <sys/wait.h>
 
 
-
+int execute_command(char *command);
 
 
 
