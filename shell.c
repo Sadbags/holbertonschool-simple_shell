@@ -18,14 +18,31 @@ int main(void)
 
 		if (read == -1)
 		{
+			if (feof(stdin))
+			{
+				printf("\n");
+				free(input);
+				exit(EXIT_SUCCESS);
+			}
 			perror("getline");
+			free(input);
 			exit(EXIT_FAILURE);
 		}
-		if (strcmp(input, "exit\n") == 0)
-		free(input);
-		exit(EXIT_SUCCESS);
 
+		if (input[read - 1] == '\n')
+		input[read - 1] = '\0';
+
+		if (strcmp(input, "") == 0)
+		continue;
+
+		if (execute_command(input) == -1)
+		fprintf(stderr, "command not found: %s\n", input);
+
+		free(input);
+
+		input = NULL;
+		len = 0;
 	}
-	free(input);
+
 	return (0);
 }
