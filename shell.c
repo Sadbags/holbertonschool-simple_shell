@@ -1,51 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
 #include "shell.h"
 
-/**
- * main - Entry point
- *
- * Return: Always 0 (success)
-*/
-int main(void)
-{
-	char *input = NULL;
-	size_t len = 0;
-	ssize_t read;
-	char *tokens[100];
+#define MAX_COMMAND_LENGTH 256
 
-	while (1)
-	{
-		printf("$ ");
-		read = getline(&input, &len, stdin);
+int main(void);
 
-		if (read == -1)
-		{
-			if (feof(stdin))
-			{
-				printf("\n");
-				free(input);
-				exit(EXIT_SUCCESS);
-			}
-			perror("getline");
-			free(input);
-			exit(EXIT_FAILURE);
-		}
+int main(void) {
+    char command[MAX_COMMAND_LENGTH];
+    char buffer[MAX_COMMAND_LENGTH];
+    size_t length;
+    pid_t pid;
 
-		if (input[read - 1] == '\n')
-		    input[read - 1] = '\0';
+    while (1) {
 
-		if (strcmp(input, "") == 0)
-		continue;
+        write(STDOUT_FILENO, "$ ", 2);
+        fflush(stdout);
 
-		token(input, tokens, 100);
+        if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
+            write(STDOUT_FILENO, "\n", 1);
+            break;
+        }
 
-		if (execute_command(tokens[0]) == -1)
-            fprintf(stderr, "command not found: %s\n", tokens[0]);
+        length = strlen(buffer);
+        if (length > 0 && buffer[length - 1] == '\n') {
+            buffer[length - 1] = '\0';
+        }
+        strncpy(command, buffer, sizeof(command));
 
-		free(input);
+        pid = fork();
 
-		input = NULL;
-		len = 0;
-	}
+        if (pid < 0) {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        } else if (pid == 0) {
 
-	return (0);
+            execlp(command, command, NULL);
+
+            perror(command);
+            exit(EXIT_FAILURE);
+        } else {
+
+            int status;
+            waitpid(pid, &status, 0);
+        }
+    }
+
+    return 0;
 }
