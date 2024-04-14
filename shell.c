@@ -10,7 +10,6 @@ int main(void)
 	char *input = NULL;
 	size_t len = 0;
 	ssize_t read;
-	char *tokens[100];
 
 	while (1)
 	{
@@ -19,33 +18,14 @@ int main(void)
 
 		if (read == -1)
 		{
-			if (feof(stdin))
-			{
-				printf("\n");
-				free(input);
-				exit(EXIT_SUCCESS);
-			}
 			perror("getline");
-			free(input);
 			exit(EXIT_FAILURE);
 		}
-
-		if (input[read - 1] == '\n')
-		    input[read - 1] = '\0';
-
-		if (strcmp(input, "") == 0)
-		continue;
-
-		token(input, tokens, 100);
-
-		if (execute_command(tokens[0]) == -1)
-            fprintf(stderr, "command not found: %s\n", tokens[0]);
-
+		if (strcmp(input, "exit\n") == 0)
 		free(input);
+		exit(EXIT_SUCCESS);
 
-		input = NULL;
-		len = 0;
 	}
-
+	free(input);
 	return (0);
 }
