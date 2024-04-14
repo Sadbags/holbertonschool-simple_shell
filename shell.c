@@ -7,47 +7,58 @@
 
 #define MAX_COMMAND_LENGTH 256
 
-int main(void);
+/**
+ * main - Entry point of the shell program
+ *
+ * Return: Always return 0.
+*/
+int main(void)
+{
+char command[MAX_COMMAND_LENGTH];
+char buffer[MAX_COMMAND_LENGTH];
+size_t length;
+pid_t pid;
 
-int main(void) {
-    char command[MAX_COMMAND_LENGTH];
-    char buffer[MAX_COMMAND_LENGTH];
-    size_t length;
-    pid_t pid;
+while (1)
+{
+write(STDOUT_FILENO, "$ ", 2);
+fflush(stdout);
 
-    while (1) {
+if (fgets(buffer, sizeof(buffer), stdin) == NULL)
+{
+write(STDOUT_FILENO, "\n", 1);
+break;
+}
 
-        write(STDOUT_FILENO, "$ ", 2);
-        fflush(stdout);
+length = strlen(buffer);
+if (length > 0 && buffer[length - 1] == '\n')
+{
+buffer[length - 1] = '\0';
+}
+strncpy(command, buffer, sizeof(command));
 
-        if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
-            write(STDOUT_FILENO, "\n", 1);
-            break;
-        }
+pid = fork();
 
-        length = strlen(buffer);
-        if (length > 0 && buffer[length - 1] == '\n') {
-            buffer[length - 1] = '\0';
-        }
-        strncpy(command, buffer, sizeof(command));
+if (pid < 0)
+{
+perror("fork");
+exit(EXIT_FAILURE);
+}
+else if (pid == 0)
+{
 
-        pid = fork();
+execlp(command, command, NULL);
 
-        if (pid < 0) {
-            perror("fork");
-            exit(EXIT_FAILURE);
-        } else if (pid == 0) {
+perror(command);
+exit(EXIT_FAILURE);
+}
+else
+{
 
-            execlp(command, command, NULL);
+int status;
+waitpid(pid, &status, 0);
+}
+}
 
-            perror(command);
-            exit(EXIT_FAILURE);
-        } else {
-
-            int status;
-            waitpid(pid, &status, 0);
-        }
-    }
-
-    return 0;
+return (0);
 }
