@@ -1,59 +1,31 @@
 #include "shell.h"
 
-#define MAX_COMMAND_LENGTH 256
-
 /**
- * main - Entry point of the shell program
+ * main - Entry point
  *
- * Return: Always return 0.
+ * Return: Always 0 (success)
 */
 int main(void)
 {
-char command[MAX_COMMAND_LENGTH];
-char buffer[MAX_COMMAND_LENGTH];
-size_t length;
-pid_t pid;
+	char *input = NULL;
+	size_t len = 0;
+	ssize_t read;
 
-while (1)
-{
-write(STDOUT_FILENO, "$ ", 2);
-fflush(stdout);
+	while (1)
+	{
+		printf("simple_shell ");
+		read = getline(&input, &len, stdin);
 
-if (fgets(buffer, sizeof(buffer), stdin) == NULL)
-{
-write(STDOUT_FILENO, "\n", 1);
-break;
-}
+		if (read == -1)
+		{
+			perror("getline");
+			exit(EXIT_FAILURE);
+		}
+		if (strcmp(input, "exit\n") == 0)
+		free(input);
+		exit(EXIT_SUCCESS);
 
-length = strlen(buffer);
-if (length > 0 && buffer[length - 1] == '\n')
-{
-buffer[length - 1] = '\0';
-}
-strncpy(command, buffer, sizeof(command));
-
-pid = fork();
-
-if (pid < 0)
-{
-perror("fork");
-exit(EXIT_FAILURE);
-}
-else if (pid == 0)
-{
-
-execlp(command, command, NULL);
-
-perror(command);
-exit(EXIT_FAILURE);
-}
-else
-{
-
-int status;
-waitpid(pid, &status, 0);
-}
-}
-
-return (0);
+	}
+	free(input);
+	return (0);
 }
