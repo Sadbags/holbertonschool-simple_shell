@@ -19,11 +19,11 @@ int main(void)
 		if (read == -1)
 		{
 			perror("getline");
-			exit(EXIT_FAILURE);
+			exit(EXIT_SUCCESS);
 		}
 		if (strcmp(input, "exit\n") == 0)
 		free(input);
-		exit(EXIT_SUCCESS);
+		exit(EXIT_FAILURE);
 
 	}
 	free(input);
