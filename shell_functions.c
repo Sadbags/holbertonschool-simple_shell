@@ -1,63 +1,35 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 #include "shell.h"
 
-#define MAX_COMMAND_LENGTH 256
-
 /**
- * displayPrompt - Displays prompt for user
-*/
-void displayPrompt(void)
-{
-write(STDOUT_FILENO, "$ ", 2);
-}
-
-/**
- * readCommand - Reads a command from the user input
+ * displayprompt - displays and waits for input
  *
- * Return: A pointer to the command string read from stdin
+ * Return: void
 */
-char *readCommand(void)
+void displayprompt(void)
 {
-static char command[MAX_COMMAND_LENGTH];
-char *newlinePos;
-
-if (fgets(command, sizeof(command), stdin) != NULL)
-{
-newlinePos = strchr(command, '\n');
-if (newlinePos != NULL)
-{
-*newlinePos = '\0';
-}
-return (command);
-}
-else
-{
-if (feof(stdin))
-{
-printf("\n");
-exit(EXIT_SUCCESS);
-}
-else
-{
-perror("fgets");
-exit(EXIT_FAILURE);
-}
-}
+	char *displayprompt = "#cisfun$";
+	write(STDOUT_FILENO, displayprompt, _strlen(displayprompt));
 }
 
 /**
- * executeCommand - Executes a command using execlp
+ * read_line - reads user input
  *
- * @command: THe command to be executed
+ * Return: string of user input
 */
-void executeCommand(const char *command)
+char *read_line(void)
 {
-if (execlp(command, command, NULL) == -1)
-{
-perror("execlp");
-exit(EXIT_FAILURE);
-}
+	int len = 0;
+	size_t buffsize = 0;
+	char *line = NULL;
+
+	len = getline(&line, buffsize, stdin);
+
+	if (len == EOF)
+	{
+		free(line);
+		exit(EXIT_SUCCESS);
+	}
+	line[len - 1] = '\0';
+
+	return (line);
 }
