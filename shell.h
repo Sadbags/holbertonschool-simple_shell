@@ -13,8 +13,6 @@
 #include <stddef.h>
 
 /* Prototypes */
-void executeCommand(const char *command);
-char *readCommand(void);
-void displayPrompt(void);
+
 
 #endif
