@@ -7,7 +7,7 @@
  */
 void display_prompt(void)
 {
-    printf("$ ");
+printf("$ ");
 }
 
 /**
@@ -17,19 +17,19 @@ void display_prompt(void)
  */
 char *read_input(void)
 {
-    char *input = malloc(MAX_INPUT_LENGTH);
-    if (!input)
-    {
-        perror("malloc failed");
-        exit(EXIT_FAILURE);
-    }
-    if (fgets(input, MAX_INPUT_LENGTH, stdin) == NULL)
-    {
-        printf("\n");
-        exit(EXIT_SUCCESS);
-    }
-    input[strcspn(input, "\n")] = '\0';
-    return input;
+char *input = malloc(MAX_INPUT_LENGTH);
+if (!input)
+{
+perror("malloc failed");
+exit(EXIT_FAILURE);
+}
+if (fgets(input, MAX_INPUT_LENGTH, stdin) == NULL)
+{
+printf("\n");
+exit(EXIT_SUCCESS);
+}
+input[strcspn(input, "\n")] = '\0';
+return (input);
 }
 
 /**
@@ -40,25 +40,25 @@ char *read_input(void)
  */
 char **parse_input(char *input)
 {
-    char **args = malloc(MAX_INPUT_LENGTH * sizeof(char *));
-    char *token;
-    int i = 0;
+char **args = malloc(MAX_INPUT_LENGTH * sizeof(char *));
+char *token;
+int i = 0;
 
-    if (!args)
-    {
-        perror("malloc failed");
-        exit(EXIT_FAILURE);
-    }
+if (!args)
+{
+perror("malloc failed");
+exit(EXIT_FAILURE);
+}
 
-    token = strtok(input, " ");
-    while (token != NULL)
-    {
-        args[i++] = token;
-        token = strtok(NULL, " ");
-    }
-    args[i] = NULL;
+token = strtok(input, " ");
+while (token != NULL)
+{
+args[i++] = token;
+token = strtok(NULL, " ");
+}
+args[i] = NULL;
 
-    return args;
+return (args);
 }
 
 
@@ -68,24 +68,24 @@ char **parse_input(char *input)
  */
 void execute_command(char **args)
 {
-    pid_t pid;
-    int status;
-    pid = fork();
-    if (pid < 0)
-    {
-        perror("fork failed");
-        exit(EXIT_FAILURE);
-    }
-    else if (pid == 0)
-    {
-        if (execvp(args[0], args) == -1)
-        {
-            perror("execvp failed");
-            exit(EXIT_FAILURE);
-        }
-    }
-    else
-    {
-        waitpid(pid, &status, 0);
-    }
+pid_t pid;
+int status;
+pid = fork();
+if (pid < 0)
+{
+perror("fork failed");
+exit(EXIT_FAILURE);
+}
+else if (pid == 0)
+{
+if (execvp(args[0], args) == -1)
+{
+perror("execvp failed");
+exit(EXIT_FAILURE);
+}
+}
+else
+{
+waitpid(pid, &status, 0);
+}
 }
