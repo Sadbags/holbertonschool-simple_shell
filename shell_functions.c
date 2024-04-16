@@ -23,11 +23,14 @@ if (!input)
 perror("malloc failed");
 exit(EXIT_FAILURE);
 }
+
 if (fgets(input, MAX_INPUT_LENGTH, stdin) == NULL)
 {
 printf("\n");
+free(input);
 exit(EXIT_SUCCESS);
 }
+
 input[strcspn(input, "\n")] = '\0';
 return (input);
 }
@@ -61,7 +64,6 @@ args[i] = NULL;
 return (args);
 }
 
-
 /**
  * execute_command - Executes the command
  * @args: Array of command and arguments
@@ -70,6 +72,7 @@ void execute_command(char **args)
 {
 pid_t pid;
 int status;
+
 pid = fork();
 if (pid < 0)
 {
@@ -78,6 +81,10 @@ exit(EXIT_FAILURE);
 }
 else if (pid == 0)
 {
+if (args[0] != NULL && strcmp(args[0], "exit") == 0)
+{
+exit(EXIT_SUCCESS);
+}
 if (execvp(args[0], args) == -1)
 {
 perror("execvp failed");
