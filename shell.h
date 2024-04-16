@@ -13,8 +13,9 @@
 #include <stddef.h>
 
 /* Prototypes */
-void executeCommand(const char *command);
-char *readCommand(void);
-void displayPrompt(void);
+void display_prompt(void);
+char *read_input(void);
+char **parse_input(char *input);
+void execute_command(char **args);
 
 #endif
