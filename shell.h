@@ -16,6 +16,6 @@
 void display_prompt(void);
 char *read_input(void);
 char **parse_input(char *input);
-void execute_command(char **args);
+int execute_command(char **args);
 
 #endif
