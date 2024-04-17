@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
+#include "shell.h"
 
 #define MAX_INPUT_LENGTH 1024
 
@@ -47,25 +43,25 @@ return (input);
  */
 char **parse_input(char *input)
 {
-    char **args = malloc(MAX_INPUT_LENGTH * sizeof(char *));
-    char *token;
-    int i = 0;
+char **args = malloc(MAX_INPUT_LENGTH * sizeof(char *));
+char *token;
+int i = 0;
 
-    if (!args)
-    {
-        perror("malloc failed");
-        exit(EXIT_FAILURE);
-    }
+if (!args)
+{
+perror("malloc failed");
+exit(EXIT_FAILURE);
+}
 
-    token = strtok(input, " ");
-    while (token != NULL)
-    {
-        args[i++] = token;
-        token = strtok(NULL, " ");
-    }
-    args[i] = NULL;
+token = strtok(input, " ");
+while (token != NULL)
+{
+args[i++] = token;
+token = strtok(NULL, " ");
+}
+args[i] = NULL;
 
-    return args;
+return (args);
 }
 
 /**
@@ -115,24 +111,3 @@ waitpid(pid, &status, 0);
 
 return (1);
 }
-
-int main()
-{
-    char **args;
-    char input[MAX_INPUT_LENGTH];
-
-    printf("Enter command: ");
-    fgets(input, sizeof(input), stdin);
-
-    /* Remove trailing newline character */
-    if ((strlen(input) > 0) && (input[strlen(input) - 1] == '\n'))
-        input[strlen(input) - 1] = '\0';
-
-    args = parse_input(input);
-    execute_command(args);
-
-    free(args);
-
-    return 0;
-}
-
