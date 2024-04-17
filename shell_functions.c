@@ -7,7 +7,7 @@
  */
 void display_prompt(void)
 {
-printf("$ ");
+printf("simple_shell$ ");
 }
 
 /**
@@ -65,13 +65,28 @@ return (args);
 }
 
 /**
- * execute_command - Executes the command
- * @args: Array of command and arguments
- */
-void execute_command(char **args)
+ * execute_command - Executes the command provided by the user
+ * @args: Array os strings containing the command and its arguments
+ *
+ * Return: 1 on success, -1 on failure
+*/
+int execute_command(char **args)
 {
 pid_t pid;
 int status;
+
+if (args == NULL || args[0] == NULL)
+{
+/* No command provided, treat as Ctrl+D (end-of-file condition) */
+printf("\n");
+exit(EXIT_SUCCESS);
+}
+
+if (strcmp(args[0], "exit") == 0)
+{
+/* "exit" command detected */
+exit(EXIT_SUCCESS);
+}
 
 pid = fork();
 if (pid < 0)
@@ -81,10 +96,7 @@ exit(EXIT_FAILURE);
 }
 else if (pid == 0)
 {
-if (args[0] != NULL && strcmp(args[0], "exit") == 0)
-{
-exit(EXIT_SUCCESS);
-}
+/* Child process */
 if (execvp(args[0], args) == -1)
 {
 perror("execvp failed");
@@ -93,6 +105,9 @@ exit(EXIT_FAILURE);
 }
 else
 {
+/* Parent process */
 waitpid(pid, &status, 0);
 }
+
+return (1);
 }
