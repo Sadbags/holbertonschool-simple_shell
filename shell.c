@@ -13,9 +13,28 @@ char **args;
 while (1)
 {
 display_prompt();
+
 input = read_input();
+if (input == NULL)
+{
+printf("\n");
+break;
+}
+
 args = parse_input(input);
-execute_command(args);
+if (args == NULL)
+{
+free(input);
+continue;
+}
+
+if (execute_command(args) == 0)
+{
+free(input);
+free(args);
+break;
+}
+
 free(input);
 free(args);
 }
