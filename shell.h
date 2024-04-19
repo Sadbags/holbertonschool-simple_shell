@@ -16,6 +16,7 @@
 void display_prompt(void);
 char *read_input(void);
 char **parse_input(char *input);
+char *strtok(char *str, const char *delim);
 int execute_command(char **args);
 
 #endif
