@@ -65,11 +65,47 @@ return (args);
 }
 
 /**
+ * strtok - Parses a string into tokens
+ * @str: The string to be parsed
+ * @delim: The delimiter character
+ *
+ * Return: A pointer to the next token
+ */
+char *strtok(char *str, const char *delim)
+{
+static char *buffer = NULL;
+char *start;
+char *end;
+
+if (str != NULL)
+buffer = str;
+if (buffer == NULL)
+return (NULL);
+
+start = buffer;
+end = buffer;
+
+while (*end != '\0')
+{
+if (strchr(delim, *end) != NULL)
+{
+*end = '\0';
+buffer = end + 1;
+return (start);
+}
+end++;
+}
+
+buffer = NULL;
+return (start);
+}
+
+/**
  * execute_command - Executes the command provided by the user
- * @args: Array os strings containing the command and its arguments
+ * @args: Array of strings containing the command and its arguments
  *
  * Return: 1 on success, -1 on failure
-*/
+ */
 int execute_command(char **args)
 {
 pid_t pid;
@@ -86,6 +122,23 @@ if (strcmp(args[0], "exit") == 0)
 {
 /* "exit" command detected */
 exit(EXIT_SUCCESS);
+}
+
+if (strcmp(args[0], "cd") == 0)
+{
+/* "cd" command detected */
+if (args[1] == NULL)
+{
+fprintf(stderr, "cd: missing argument\n");
+return (-1);
+}
+
+if (chdir(args[1]) != 0)
+{
+perror("chdir failed");
+return (-1);
+}
+return (1);
 }
 
 pid = fork();
