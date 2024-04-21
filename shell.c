@@ -7,37 +7,44 @@
 */
 int main(void)
 {
-char *input;
-char **args;
+    char *input;
+    char **args;
 
-while (1)
-{
-display_prompt();
+    while (1)
+    {
+        display_prompt();
 
-input = read_input();
-if (input == NULL)
-{
-printf("\n");
-break;
-}
+        input = read_input();
+        if (input == NULL)
+        {
+            printf("\n");
+            break; /* End of file condition (Ctrl+D) */
+        }
 
-args = parse_input(input);
-if (args == NULL)
-{
-free(input);
-continue;
-}
+        args = parse_input(input);
+        if (args == NULL)
+        {
+            free(input);
+            continue; /* Skip to the next iteration */
+        }
 
-if (execute_command(args) == 0)
-{
-free(input);
-free(args);
-break;
-}
+        if (strcmp(args[0], "exit") == 0)
+        {
+            free(input);
+            free(args);
+            break; /* Exit the shell loop */
+        }
 
-free(input);
-free(args);
-}
+        if (execute_command(args) == 0)
+        {
+            free(input);
+            free(args);
+            break; /* Command executed successfully */
+        }
 
-return (0);
+        free(input);
+        free(args);
+    }
+
+    return (0);
 }
