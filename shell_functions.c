@@ -1,13 +1,12 @@
 #include "shell.h"
 
 #define MAX_INPUT_LENGTH 1024
-
 /**
  * display_prompt - Displays the shell prompt
  */
 void display_prompt(void)
 {
-printf("simple_shell$ ");
+	printf("simple_shell$ ");
 }
 
 /**
@@ -17,22 +16,29 @@ printf("simple_shell$ ");
  */
 char *read_input(void)
 {
-char *input = malloc(MAX_INPUT_LENGTH);
-if (!input)
-{
-perror("malloc failed");
-exit(EXIT_FAILURE);
-}
+	char *input = (char *)malloc(MAX_INPUT_LENGTH * sizeof(char));
+	unsigned int len;
 
-if (fgets(input, MAX_INPUT_LENGTH, stdin) == NULL)
-{
-printf("\n");
-free(input);
-exit(EXIT_SUCCESS);
-}
+	if (!input)
+	{
+		perror("malloc failed");
+		exit(EXIT_FAILURE);
+	}
 
-input[strcspn(input, "\n")] = '\0';
-return (input);
+	if (fgets(input, MAX_INPUT_LENGTH, stdin) == NULL)
+	{
+		printf("\n");
+		free(input);
+		exit(EXIT_SUCCESS);
+	}
+
+	len = strlen(input);
+	if (len > 0 && input[len - 1] == '\n')
+	{
+		input[len - 1] = '\0';
+	}
+
+	return input;
 }
 
 /**
