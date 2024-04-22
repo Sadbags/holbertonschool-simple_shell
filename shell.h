@@ -17,7 +17,9 @@ void display_prompt(void);
 char *read_input(void);
 char **parse_input(char *input);
 char *strtok(char *str, const char *delim);
-char *search_path(char *command);
 int execute_command(char **args);
+int execute_builtin_command(char **args);
+int execute_cd_command(char **args);
+int execute_external_command(char **args);
 
 #endif
