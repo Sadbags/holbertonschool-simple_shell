@@ -37,7 +37,7 @@ int main(void)
         }
         else
         {
-            // Execute the command normally
+            /* Execute the command normally */
             if (execute_command(args) == 0)
             {
                 free(input);
