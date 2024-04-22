@@ -32,7 +32,7 @@ if (strcmp(args[0], "exit") == 0)
 {
 free(input);
 free(args);
-break; /* Exit the shell loop */
+return (1); /* Exit the shell loop */
 }
 
 if (execute_command(args) == 0)
