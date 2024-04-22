@@ -32,7 +32,7 @@ int main(void)
 
         if (strcmp(args[0], "/bin/ls") == 0)
         {
-            // Execute the command directly
+            /* Execute the command directly */
             execute_command(args);
         }
         else
