@@ -26,9 +26,8 @@ exit(EXIT_FAILURE);
 
 if (fgets(input, MAX_INPUT_LENGTH, stdin) == NULL)
 {
-printf("\n");
 free(input);
-exit(EXIT_SUCCESS);
+return (NULL);
 }
 
 input[strcspn(input, "\n")] = '\0';
