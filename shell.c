@@ -1,10 +1,5 @@
 #include "shell.h"
 
-/**
- * main - Entry point of the simple shell program
- *
- * Return: Always 0
-*/
 int main(void)
 {
 char *input;
@@ -32,7 +27,7 @@ if (strcmp(args[0], "exit") == 0)
 {
 free(input);
 free(args);
-return (1); /* Exit the shell loop */
+return (0); /* Exit the shell loop */
 }
 
 if (execute_command(args) == 0)
