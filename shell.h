@@ -1,6 +1,8 @@
 #ifndef SHELL_H
 #define SHELL_H
 
+#define MAX_INPUT_LENGTH 1024
+
 /* Libraries */
 #include <stdio.h>
 #include <string.h>
