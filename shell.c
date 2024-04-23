@@ -1,45 +1,54 @@
 #include "shell.h"
-
 /**
- * main - Runs the Simple Shell
- * @ac: Argument count
- * @av: Argument vector
- * @env: environment
- * Return: 0
- */
-int main(int ac, char **av,  char **env)
+ * main - print prompt, handle EOF
+ *
+ * Description:
+ * This function prints the prompt, reads the input, parses the input,
+ * into tokens, executes command provided by the user,and handles
+ * exit condition
+ *
+ * Return: Always 0
+*/
+int main(void)
 {
-	char *pointer = NULL, **tokens = NULL;
-	int flag;
-	size_t n = 0;
-	(void) av;
-	(void) ac;
+char *input;
+char **args;
 
-	while (1)
-	{
-		if (isatty(0))
-			write(1, "$ ", 2);
+while (1)
+{
+display_prompt();
 
-		flag = getline(&pointer, &n, stdin);
+input = read_input();
+if (input == NULL)
+{
+printf("\n");
+break; /* End of file condition (Ctrl+D) */
+}
 
-		/* Victor, here goes the if statement to handle EOF */
-		// Check if EOF is reached or an error occurred
-        if (flag == -1 && feof(stdin)) {
-            printf("\n"); // Print a newline for better formatting
-            break; // Exit the loop
-        } else if (flag == -1) {
-            perror("getline"); // Print an error message if getline fails
-            break; // Exit the loop
-        }
-		if (pointer[0] == '\n' || pointer[0] == ' ')
-		{
-			free(pointer);
-			pointer = NULL;
-			continue;
-		}
+args = parse_input(input);
+if (args == NULL)
+{
+free(input);
+continue; /* Skip to the next iteration */
+}
 
-		tokens = tokenization(pointer, " \n");
-		comp_exec(tokens, pointer, env);
-	}
-	return (0);
+if (strcmp(args[0], "exit") == 0)
+{
+free(input);
+free(args);
+return (0); /* Exit the shell loop */
+}
+
+if (execute_command(args) == 0)
+{
+free(input);
+free(args);
+break; /* Command executed successfully */
+}
+
+free(input);
+free(args);
+}
+
+return (0);
 }
