@@ -1,5 +1,14 @@
 #include "shell.h"
-
+/**
+ * main - print prompt, handle EOF
+ *
+ * Description:
+ * This function prints the prompt, reads the input, parses the input,
+ * into tokens, executes command provided by the user,and handles
+ * exit condition
+ *
+ * Return: Always 0
+*/
 int main(void)
 {
 char *input;
