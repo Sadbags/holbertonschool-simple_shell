@@ -38,13 +38,11 @@ char *path_finder(char *cmd)
 			free(path);
 			return (new_path);
 		}
-
 		else
 			new_path[0] = 0;
 	}
 	free(path);
 	free(new_path);
-
 	if (stat(cmd, &buf) == 0)
 		return (_strdup(cmd));
 	return (NULL);
