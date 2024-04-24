@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 			s[file_stream - 1] = '\0';
 		if (*s == '\0')
 			continue;
-		if (cmd_read(s, file_stream, name) == 2)
+		if (_cmdread(s, file_stream, name) == 2)
 		{
 			free(s);
 			exit(EXIT_SUCCESS);
@@ -44,13 +44,13 @@ int main(int argc, char *argv[])
 }
 
 /**
- * cmd_read - handles command line and tokenizes it
+ * _cmdread - handles command line and tokenizes it
  *@s: string
  *@file_stream: getline input
  *@name: name of the command
  * Return: 0
  */
-int cmd_read(char *s, size_t __attribute__((unused)) file_stream, char *name)
+int _cmdread(char *s, size_t __attribute__((unused)) file_stream, char *name)
 {
 	char *token = NULL;
 	char *cmd_arr[100];
@@ -63,7 +63,7 @@ int cmd_read(char *s, size_t __attribute__((unused)) file_stream, char *name)
 		return (2);
 
 	if (_strcmp(s, "env") == 0)
-		return (_printenv());
+		return (print_env());
 
 	token = strtok(s, " "), i = 0;
 	while (token)
@@ -75,7 +75,7 @@ int cmd_read(char *s, size_t __attribute__((unused)) file_stream, char *name)
 		return (0);
 
 	cmd_arr[i] = NULL;
-	return (call_command(cmd_arr, name));
+	return (_callcommand(cmd_arr, name));
 }
 
 /**
@@ -94,13 +94,13 @@ void print_not_found(char *cmd, char *name)
 }
 
 /**
- * call_command - calls cmd, forks, execve
+ * _callcommand - calls cmd, forks, execve
  *
  * @cmd_arr: a string provided by the stdin
  * @name: name of the command
  * Return: 0
  */
-int call_command(char *cmd_arr[], char *name)
+int _callcommand(char *cmd_arr[], char *name)
 {
 	char *exe_path_str = NULL;
 	char *cmd = NULL;
@@ -108,7 +108,7 @@ int call_command(char *cmd_arr[], char *name)
 	int status;
 
 	cmd = cmd_arr[0];
-	exe_path_str = pathfinder(cmd);
+	exe_path_str = path_finder(cmd);
 	if (exe_path_str == NULL)
 	{
 		print_not_found(cmd, name);
