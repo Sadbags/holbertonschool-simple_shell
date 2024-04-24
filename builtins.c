@@ -4,7 +4,7 @@
  *
  * Return: 0
  */
-int _printenv(void)
+int print_env(void)
 {
 	char *s = environ[0];
 	int i = 0;
@@ -47,7 +47,7 @@ int _str_n_cmp(char *s1, char *s2, int n)
  *
  * Return: 0
  */
-char *_getenv(char *var)
+char *get_env(char *var)
 {
 	int i = 0;
 
