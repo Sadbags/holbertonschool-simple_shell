@@ -2,13 +2,13 @@
 
 
 .SH NAME
-simple_shell \- Simple shell proyect
+simple_shell \- Simple shell project
 
 .SH SYNOPSIS
-
+This project is a very simple shell project from the Holberton Class, first trimester
 
 .SH DESCRIPTION
-
+The simple shell command will open up an interface for the user to use the very shell that was created by the students.
 
 .SH OPTIONS
 
