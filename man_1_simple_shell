@@ -1,8 +1,7 @@
 .TH SIMPLE SHELL 1 "2023-04-11" "1.0" "simple_shell"
 
-
 .SH NAME
-simple_shell \- Simple shell project
+simple_shell - Simple shell project
 
 .SH SYNOPSIS
 This project is a very simple shell project from the Holberton Class, first trimester
@@ -11,12 +10,55 @@ This project is a very simple shell project from the Holberton Class, first trim
 The simple shell command will open up an interface for the user to use the very shell that was created by the students.
 
 .SH OPTIONS
+The simple shell supports the following options:
 
+.TP
+-h, --help
+Display a help message explaining how to use the shell and its options.
+
+.TP
+-v, --version
+Display the version information of the shell.
+
+.TP
+-c, --command <command>
+Execute a single command provided as an argument to the option, instead of entering interactive mode.
+
+.TP
+-f, --file <script_file>
+Read and execute commands from the specified script file, instead of entering interactive mode.
+
+.TP
+-e, --execute <command>
+Similar to -c option, execute a single command provided as an argument to the option.
+
+.TP
+-l, --login
+Start the shell as a login shell, which may initialize environment variables or execute startup scripts.
+
+.TP
+-p, --privileged
+Start the shell with elevated privileges, if applicable.
+
+.TP
+-s, --silent
+Run the shell in silent mode, suppressing unnecessary output or prompts.
+
+.TP
+-n, --noexec
+Parse and check syntax of commands without executing them.
+
+.TP
+-r, --restricted
+Start the shell in a restricted mode, limiting access to certain commands or resources.
 
 .SH COMMANDS
-
+The simple shell supports various built-in commands and standard shell commands. Refer to the manual of your system's shell for more information.
 
 .SH EXAMPLES
-
+To start the simple shell in interactive mode, simply run:
+.BR simple_shell 
 
 .SH AUTHORS
+The simple shell project was created by students of Holberton School.
+
