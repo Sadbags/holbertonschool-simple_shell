@@ -25,8 +25,8 @@ What is EOF?
 
 What is pid and ppid?
 
--pid : The process identifier (PID) is to identify an active process.
--ppid : The parent process ID is the number assigned to the process of a given process in an operating process.
+- pid : The process identifier (PID) is to identify an active process.
+- ppid : The parent process ID is the number assigned to the process of a given process in an operating process.
 
 What if fork()?
 
