@@ -1,0 +1,54 @@
+.TH SIMPLE SHELL 1 "2023-04-11" "1.0" "simple_shell"
+
+.SH NAME
+	simple_shell - Simple shell project
+
+.SH SYNOPSIS
+	This project is a very simple shell project from the Holberton Class, first trimester
+
+.TP
+.B interactive format
+./simple_shell
+
+.TP
+	.B non interactive format
+	echo "/bin/ls" | ./simple_shell
+
+.SH DESCRIPTION
+	The simple shell command will open up an interface for the user to acess and execute commands in the system.
+
+.SH Builtin commands
+	The following comands are supported and standard shell commands
+
+.B env
+	- Prints the enviorment variables
+
+.B exit
+	- exits the program
+
+.B /bin/ls
+	- prints a list of files in the current directory
+
+.B ls -l
+	This will give a detailed list of files in the current directory
+
+.B pwd
+	- This will print the current working directory
+
+.B date
+- This will print the current date
+
+.SH OPTIONS
+	The simple shell supports the following options:
+
+.SH EXAMPLES
+	To start the simple shell in interactive mode, simply run:
+
+.BR
+	./simple_shell
+
+.SH AUTHORS
+	The simple shell project was created by students of Holberton School.
+
+		-Bryan Garcia
+		-Ginna Figueroa
