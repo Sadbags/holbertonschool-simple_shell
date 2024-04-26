@@ -33,8 +33,5 @@ int execute_builtin_command(char **args);
 int handle_exit_command(void);
 int handle_cd_command(char **args);
 int handle_env_command(void);
-char *_get_line(void);
-int _strlen(char *s);
-int split_line(char *line, char *argv[]);
 
 #endif
