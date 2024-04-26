@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 int _cmdread(char *s, size_t __attribute__((unused)) file_stream, char *name)
 {
 	char *token = NULL;
-	char *cmd_arr[100];
+	char *cmdarr[100];
 	int i;
 
 	if (s == NULL)
@@ -68,14 +68,14 @@ int _cmdread(char *s, size_t __attribute__((unused)) file_stream, char *name)
 	token = strtok(s, " "), i = 0;
 	while (token)
 	{
-		cmd_arr[i++] = token;
+		cmdarr[i++] = token;
 		token = strtok(NULL, " ");
 	}
 	if (i == 0)
 		return (0);
 
-	cmd_arr[i] = NULL;
-	return (_callcommand(cmd_arr, name));
+	cmdarr[i] = NULL;
+	return (_callcommand(cmdarr, name));
 }
 
 /**
@@ -102,16 +102,16 @@ void print_not_found(char *cmd, char *name)
  */
 int _callcommand(char *cmd_arr[], char *name)
 {
-	char *exe_path_str = NULL;
-	char *cmd = NULL;
+	char *_exe_path_str = NULL;
+	char *_cmd = NULL;
 	pid_t is_child;
 	int status;
 
-	cmd = cmd_arr[0];
-	exe_path_str = path_finder(cmd);
-	if (exe_path_str == NULL)
+	_cmd = cmd_arr[0];
+	_exe_path_str = path_finder(_cmd);
+	if (_exe_path_str == NULL)
 	{
-		print_not_found(cmd, name);
+		print_not_found(_cmd, name);
 		return (3);
 	}
 	is_child = fork();
@@ -124,10 +124,10 @@ int _callcommand(char *cmd_arr[], char *name)
 		wait(&status);
 	else if (is_child == 0)
 	{
-		(execve(exe_path_str, cmd_arr, environ));
+		(execve(_exe_path_str, cmd_arr, environ));
 		perror("Error:");
 		exit(1);
 	}
-	free(exe_path_str);
+	free(_exe_path_str);
 	return (0);
 }
