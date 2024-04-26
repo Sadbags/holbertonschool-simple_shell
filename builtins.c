@@ -1,98 +1,60 @@
 #include "shell.h"
-
 /**
- * print_env - prints enviorment like printenv
+ * print_env - prints environment like printenv
  *
  * Return: 0
-*/
+ */
 int print_env(void)
 {
-char **env_ptr = environ;
+	char *s = environ[0];
+	int i = 0;
 
-while (*env_ptr != NULL)
-{
-printf("%s\n", *env_ptr);
-env_ptr++;
-}
-return (0);
+	while (s)
+	{
+		write(1, s, _strlen(s));
+		write(1, "\n", 1);
+		s = environ[++i];
+	}
+	return (0);
 }
 
 /**
- * str_cmp - compares two strings up to n characters
+ * _str_n_cmp - lexicographically compares not more than count chars
+ * from two strings and returns an integer based on the result.
  * @s1: first string
- * @s2: second string
- * @n: maximum number of characters to compare
- *
- * Return:
- * 0 if the strings are equal up to n characters,
- * -1 if s1 is less than s2,
- * 1 if s1 is greater than s2.
+ * @s2: second string to compare to first string
+ * @n: count of the comparison between s1 and s2
+ * Return: <0 if s1 is less than s2, 0 for equal, >0 if s1 is greater than s2
+ * Description: Src code file like GNU C library
  */
-int str_cmp(const char *s1, const char *s2, int n)
+int _str_n_cmp(char *s1, char *s2, int n)
 {
-int i = 0;
+	char c1, c2;
 
-while (i < n)
-{
-if (s1[i] != s2[i])
-return ((s1[i] < s2[i]) ? -1 : 1);
-if (s1[i] == '\0')
-return (0);
-i++;
+	while (n--)
+	{
+		c1 = *s1++;
+		c2 = *s2++;
+		if (c1 == '\0' || c1 != c2)
+			/* compare at most, first n bytes of both strings */
+			return (c1 > c2 ? 1 : (c1 < c2 ? -1 : 0));
+	}
+	return (0);
 }
-return (0);
-}
-
 /**
- * get_env - retrieves the value of an environment variable
- * @var: name of the environment variable
+ * get_env - prints environment like getenv
+ * @var: environ variable
  *
- * Return: pointer to the value of the environment variable,
- *         or NULL if the variable is not found
+ * Return: 0
  */
 char *get_env(char *var)
 {
-int i;
-for (i = 0; environ[i] != NULL; i++)
-{
-if (str_cmp(environ[i], var, strlen(var)) == 0)
-return (&environ[i][strlen(var) + 1]);
-}
-return (NULL);
-}
+	int i = 0;
 
-/**
- * handle_built_in_commands - handles built-in commands
- * @args: Array of strings if the provided command is a built-in command
- * and executes the corresponding action if it is. suported built-in
- * command are: exit, cd, and env
- *
- * Return: 0 on success, -1 if the command is not a built in command
-*/
-int handle_built_in_commands(char **args)
-{
-if (args == NULL || args[0] == NULL)
-{
-/* No command provided, treat as Ctrl+D (end-of-file condition) */
-printf("\n");
-return (0);
-}
-
-if (strcmp(args[0], "exit") == 0)
-{
-/* "exit" command detected */
-return (handle_exit_command());
-}
-else if (strcmp(args[0], "cd") == 0)
-{
-/* "cd" command detected */
-return (handle_cd_command(args));
-}
-else if (strcmp(args[0], "env") == 0)
-{
-/* "env" command detected */
-return (handle_env_command());
-}
-
-return (-1); /* Not a built-in command */
+	for (i = 0; environ[i]; i++)
+	{
+		if (_str_n_cmp(environ[i], var, _strlen(var)) == 0)
+			return (&environ[i][_strlen(var)]);
+	}
+	return (NULL);
 }
