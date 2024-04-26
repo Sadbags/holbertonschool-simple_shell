@@ -9,40 +9,40 @@ char *path_finder(char *cmd)
 {
 	char *path = _strdup(get_env("PATH"));
 	int i = 0, j = 0;
-	char *path_tokens = strtok(path, ":");
-	char *path_array[100];
+	char *_path_tokens = strtok(path, ":");
+	char *_path_array[100];
 	char *s2 = cmd;
-	char *new_path = NULL;
+	char *_new_path = NULL;
 	struct stat buf;
 
-	new_path = malloc(sizeof(char) * 100);
+	_new_path = malloc(sizeof(char) * 100);
 	if (get_env("PATH")[0] == ':')
 		if (stat(cmd, &buf) == 0)
 			return (_strdup(cmd));
 
-	while (path_tokens != NULL)
+	while (_path_tokens != NULL)
 	{
-		path_array[i++] = path_tokens;
-		path_tokens = strtok(NULL, ":");
+		_path_array[i++] = _path_tokens;
+		_path_tokens = strtok(NULL, ":");
 	}
-	path_array[i] = NULL;
-	for (j = 0; path_array[j]; j++)
+	_path_array[i] = NULL;
+	for (j = 0; _path_array[j]; j++)
 	{
-		_strcpy(new_path, path_array[j]);
-		_strcat(new_path, "/");
-		_strcat(new_path, s2);
-		_strcat(new_path, "\0");
+		_strcpy(_new_path, _path_array[j]);
+		_strcat(_new_path, "/");
+		_strcat(_new_path, s2);
+		_strcat(_new_path, "\0");
 
-		if (stat(new_path, &buf) == 0)
+		if (stat(_new_path, &buf) == 0)
 		{
 			free(path);
-			return (new_path);
+			return (_new_path);
 		}
 		else
-			new_path[0] = 0;
+			_new_path[0] = 0;
 	}
 	free(path);
-	free(new_path);
+	free(_new_path);
 	if (stat(cmd, &buf) == 0)
 		return (_strdup(cmd));
 	return (NULL);
