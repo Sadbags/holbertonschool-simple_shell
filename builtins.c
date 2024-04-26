@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * _printenv - prints environment like printenv
+ * print_env - prints environment like printenv
  *
  * Return: 0
  */
@@ -42,7 +42,7 @@ int _str_n_cmp(char *s1, char *s2, int n)
 	return (0);
 }
 /**
- * _getenv - prints environment like getenv
+ * get_env - prints environment like getenv
  * @var: environ variable
  *
  * Return: 0
