@@ -9,18 +9,18 @@
  */
 char *_strcat(char *dest, char *src)
 {
-	int j = 0;
+    int j = 0;
 
-	int length = _strlen(dest);
+    int length = _strlen(dest);
 
-	while (src[j] != '\0')
-	{
-		dest[length] = src[j];
-		length++;
-		j++;
-	}
-	dest[length] = '\0';
-	return (dest);
+    while (src[j] != '\0')
+    {
+        dest[length] = src[j];
+        length++;
+        j++;
+    }
+    dest[length] = '\0';
+    return (dest);
 }
 
 /**
@@ -32,16 +32,16 @@ char *_strcat(char *dest, char *src)
  */
 int _strcmp(char *s1, char *s2)
 {
-	while (*s1 == *s2)
-	{
-		if (*s1 == '\0')
-		{
-			return (0);
-		}
-		s1++;
-		s2++;
-	}
-	return (*s1 - *s2);
+    while (*s1 == *s2)
+    {
+        if (*s1 == '\0')
+        {
+            return (0);
+        }
+        s1++;
+        s2++;
+    }
+    return (*s1 - *s2);
 }
 
 /**
@@ -53,17 +53,17 @@ int _strcmp(char *s1, char *s2)
  */
 char *_strcpy(char *dest, char *src)
 {
-	int length, i;
+    int length, i;
 
-	length = _strlen(src);
+    length = _strlen(src);
 
-	for (i = 0; i < length; i++)
-	{
-		dest[i] = src[i];
-	}
-	dest[i] = '\0';
+    for (i = 0; i < length; i++)
+    {
+        dest[i] = src[i];
+    }
+    dest[i] = '\0';
 
-	return (dest);
+    return (dest);
 }
 
 /**
@@ -75,13 +75,13 @@ char *_strcpy(char *dest, char *src)
 
 int _strlen(char *s)
 {
-	int length = 0;
+    int length = 0;
 
-	while (s[length] != '\0')
-	{
-		length++;
-	}
-	return (length);
+    while (s[length] != '\0')
+    {
+        length++;
+    }
+    return (length);
 }
 
 /**
@@ -92,22 +92,22 @@ int _strlen(char *s)
  */
 char *_strdup(char *string)
 {
-	char *dup;
-	unsigned int i = 0, length = 0;
+    char *dup;
+    unsigned int i = 0, length = 0;
 
-	if (string == NULL)
-		return (NULL);
+    if (string == NULL)
+        return (NULL);
 
-	while (string[length])
-		length++;
+    while (string[length])
+        length++;
 
-	dup = malloc(sizeof(char) * (length + 1));
+    dup = malloc(sizeof(char) * (length + 1));
 
-	if (dup == NULL)
-		return (NULL);
+    if (dup == NULL)
+        return (NULL);
 
-	while ((dup[i] = string[i]) != '\0')
-		i++;
+    while ((dup[i] = string[i]) != '\0')
+        i++;
 
-	return (dup);
+    return (dup);
 }
