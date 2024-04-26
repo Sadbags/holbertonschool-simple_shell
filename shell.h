@@ -27,5 +27,13 @@ char *_strcat(char *dest, char *src);
 char *_strcpy(char *dest, char *src);
 char *get_env(char *var);
 void print_not_found(char *cmd, char *name);
+char *path_command(const char *cmd);
+int execute_external_command(char **args);
+int execute_command(char **args);
+int execute_cd_command(char **args);
+int execute_builtin_command(char **args);
+int handle_exit_command(void);
+int handle_cd_command(char **args);
+int handle_env_command(void);
 
 #endif
