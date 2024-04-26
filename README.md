@@ -11,7 +11,30 @@ At the end of this project, you are expected to be able to explain to anyone, wi
 
 ## Description
 
+- What is shell?
+
 Shell is a command-line interpreter or shell that provides a command line user for Unix-like operating systems. The Shell is a program that takes the command inputs from the user and passes them to the machines to execute them through the kernel.
+
+- What is a kernel?
+
+A kernel is the core component of an operating system (OS) that manages the system's resources and provides essential services to software applications like disks, RAM, CPU, etc.
+
+- What is EOF?
+
+End of file is a condition that terminates the program using (Ctrl+D) and exits to the terminal.
+
+- What is pid and ppid?
+
+* pid : The process identifier (PID) is to identify an active process.
+* ppid : The parent process ID is the number assigned to the process of a given process in an operating process.
+
+- What if fork()?
+
+It creates a new process duplicating the process that makes the call.
+
+- What is wait()?
+
+It waits for the child to finish and it recovers the status of its exit.
 
 ## General Requirements
 
@@ -69,7 +92,7 @@ Shell is a command-line interpreter or shell that provides a command line user f
 Your shell will be compiled this way:
 
 ```
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o simple_shell
 ```
 ## Authors
 
