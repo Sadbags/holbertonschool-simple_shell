@@ -6,16 +6,16 @@
  */
 int print_env(void)
 {
-    char *s = environ[0];
-    int i = 0;
+char *s = environ[0];
+int i = 0;
 
-    while (s)
-    {
-        write(1, s, _strlen(s));
-        write(1, "\n", 1);
-        s = environ[++i];
-    }
-    return (0);
+while (s)
+{
+write(1, s, _strlen(s));
+write(1, "\n", 1);
+s = environ[++i];
+}
+return (0);
 }
 
 /**
@@ -29,17 +29,17 @@ int print_env(void)
  */
 int _str_n_cmp(char *s1, char *s2, int n)
 {
-    char c1, c2;
+char c1, c2;
 
-    while (n--)
-    {
-        c1 = *s1++;
-        c2 = *s2++;
-        if (c1 == '\0' || c1 != c2)
+while (n--)
+{
+c1 = *s1++;
+c2 = *s2++;
+if (c1 == '\0' || c1 != c2)
             /* compare at most, first n bytes of both strings */
-            return (c1 > c2 ? 1 : (c1 < c2 ? -1 : 0));
-    }
-    return (0);
+return (c1 > c2 ? 1 : (c1 < c2 ? -1 : 0));
+}
+return (0);
 }
 /**
  * get_env - prints environment like getenv
@@ -49,12 +49,12 @@ int _str_n_cmp(char *s1, char *s2, int n)
  */
 char *get_env(char *var)
 {
-    int i = 0;
+int i = 0;
 
-    for (i = 0; environ[i]; i++)
-    {
-        if (_str_n_cmp(environ[i], var, _strlen(var)) == 0)
-            return (&environ[i][_strlen(var)]);
-    }
-    return (NULL);
+for (i = 0; environ[i]; i++)
+{
+if (_str_n_cmp(environ[i], var, _strlen(var)) == 0)
+return (&environ[i][_strlen(var)]);
+}
+return (NULL);
 }
