@@ -1,101 +1,113 @@
 #include "shell.h"
 
-#define MAX_INPUT_LENGTH 1024
-
 /**
- * display_prompt - Displays the shell prompt
- */
-void display_prompt(void)
-{
-printf("simple_shell$ ");
-}
-
-/**
- * read_input - Reads input from the user
+ *_strcat - a function that concatenates two strings.
+ *@dest: Char input
+ *@src: Char input
  *
- * Return: Pointer to the input string
+ * Return: Always 0.
  */
-char *read_input(void)
+char *_strcat(char *dest, char *src)
 {
-char *input = malloc(MAX_INPUT_LENGTH);
-if (!input)
-{
-perror("malloc failed");
-exit(EXIT_FAILURE);
-}
+    int j = 0;
 
-if (fgets(input, MAX_INPUT_LENGTH, stdin) == NULL)
-{
-printf("\n");
-free(input);
-exit(EXIT_SUCCESS);
-}
+    int length = _strlen(dest);
 
-input[strcspn(input, "\n")] = '\0';
-return (input);
+    while (src[j] != '\0')
+    {
+        dest[length] = src[j];
+        length++;
+        j++;
+    }
+    dest[length] = '\0';
+    return (dest);
 }
 
 /**
- * parse_input - Parses input into tokens
- * @input: Input string to be parsed
+ * _strcmp - compares two strings
+ * @s1: first string
+ * @s2: second string to compare to first string
  *
- * Return: Array of pointers to tokens
+ * Return: <0 if s1 is less than s2, 0 for equal, >0 if s1 is greater than s2
  */
-char **parse_input(char *input)
+int _strcmp(char *s1, char *s2)
 {
-char **args = malloc(MAX_INPUT_LENGTH * sizeof(char *));
-char *token;
-int i = 0;
-
-if (!args)
-{
-perror("malloc failed");
-exit(EXIT_FAILURE);
-}
-
-token = strtok(input, " ");
-while (token != NULL)
-{
-args[i++] = token;
-token = strtok(NULL, " ");
-}
-args[i] = NULL;
-
-return (args);
+    while (*s1 == *s2)
+    {
+        if (*s1 == '\0')
+        {
+            return (0);
+        }
+        s1++;
+        s2++;
+    }
+    return (*s1 - *s2);
 }
 
 /**
- * strtok - Parses a string into tokens
- * @str: The string to be parsed
- * @delim: The delimiter character
+ * _strcpy - Copies a string
+ *@dest: The new, coppied string
+ *@src: The original string to copy
  *
- * Return: A pointer to the next token
+ * Return: Always 0.
  */
-char *strtok(char *str, const char *delim)
+char *_strcpy(char *dest, char *src)
 {
-static char *buffer;
-char *start;
-char *end;
+    int length, i;
 
-if (str != NULL)
-buffer = str;
-if (buffer == NULL)
-return (NULL);
+    length = _strlen(src);
 
-start = buffer;
-end = buffer;
+    for (i = 0; i < length; i++)
+    {
+        dest[i] = src[i];
+    }
+    dest[i] = '\0';
 
-while (*end != '\0')
-{
-if (strchr(delim, *end) != NULL)
-{
-*end = '\0';
-buffer = end + 1;
-return (start);
-}
-end++;
+    return (dest);
 }
 
-buffer = NULL;
-return (start);
+/**
+ * _strlen - a function that returns the length of a string.
+ *@s: Char
+ *
+ * Return: Always 0.
+ */
+
+int _strlen(char *s)
+{
+    int length = 0;
+
+    while (s[length] != '\0')
+    {
+        length++;
+    }
+    return (length);
+}
+
+/**
+ * _strdup - copies the input string
+ * @string: input string
+ *
+ * Return: *ptr to the copied string or  NULL (if Error)
+ */
+char *_strdup(char *string)
+{
+    char *dup;
+    unsigned int i = 0, length = 0;
+
+    if (string == NULL)
+        return (NULL);
+
+    while (string[length])
+        length++;
+
+    dup = malloc(sizeof(char) * (length + 1));
+
+    if (dup == NULL)
+        return (NULL);
+
+    while ((dup[i] = string[i]) != '\0')
+        i++;
+
+    return (dup);
 }
